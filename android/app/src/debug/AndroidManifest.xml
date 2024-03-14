@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:enableOnBackInvokedCallback="true">
+        <!-- Aquí van otras configuraciones de tu aplicación -->Ï
+    </application>
+</manifest>

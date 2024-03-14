@@ -1,0 +1,250 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'ReviewPhotoScreen.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:funvas/funvas.dart';
+import 'package:pediasure_flutter/src/fuvas_anim.dart';
+import 'package:animate_do/animate_do.dart';
+
+class TakePhotoScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          ClipPath(
+            clipper: OvalBottomBorderClipper(),
+            child: Container(
+              width: screenWidth,
+              height: screenHeight / 1.6,
+              decoration: BoxDecoration(
+                color: Color(0xFF592276),
+              ),
+              child: FunvasContainer(
+                funvas: Forty(),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 45),
+            width: 180,
+            height: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Center(
+              child: Image.asset(
+                'assets/abbott.png',
+                width: 100,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 190),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 80, left: 50),
+                    child: Image.asset(
+                      'assets/logofinal.png',
+                      width: screenWidth * 0.60,
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BounceInRight(
+                            delay: Duration(milliseconds: 100),
+                            onFinish: (direction) => print('$direction'),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30.0),
+                              width: 530,
+                              height: 500,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 20,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 45.0,
+                                      right: 45,
+                                      top: 80,
+                                      bottom: 80),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'Siga las instrucciones y descubra el cambio',
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF592276),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(height: 40),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          StepItem(
+                                            stepNumber: '1',
+                                            stepDescription:
+                                                'Tome la fotografía',
+                                          ),
+                                          StepItem(
+                                            stepNumber: '2',
+                                            stepDescription:
+                                                'Espere mientras Pediasure recuerda momentos especiales. Sorpréndase con el resultado',
+                                          ),
+                                          StepItem(
+                                            stepNumber: '3',
+                                            stepDescription:
+                                                'Imprima su fotografía',
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 120.0, vertical: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  width: 500,
+                  height: 60.0,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            duration: Duration(milliseconds: 300),
+                            child: ReviewPhotoScreen(),
+                          ),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFF592276),
+                        ),
+                      ),
+                      child: Text(
+                        '¡Listo para tomar la fotografía!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  width: 500,
+                  height: 60,
+                  margin: EdgeInsets.only(bottom: 25),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white,
+                        ),
+                      ),
+                      child: Text(
+                        'Regresar',
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontSize: 22, color: Color(0xFF592276)),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StepItem extends StatelessWidget {
+  final String stepNumber;
+  final String stepDescription;
+
+  StepItem({
+    required this.stepNumber,
+    required this.stepDescription,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            stepNumber,
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF592276),
+            ),
+          ),
+          SizedBox(width: 15),
+          Expanded(
+            child: Text(
+              stepDescription,
+              style: TextStyle(
+                fontSize: 18,
+                color: Color(0xFF592276),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
