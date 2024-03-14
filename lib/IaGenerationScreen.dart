@@ -11,6 +11,14 @@ import 'package:image_compare_slider/image_compare_slider.dart';
 import 'dart:math' as math;
 import 'package:funvas/funvas.dart';
 import 'package:pediasure_flutter/src/fuvas_anim.dart';
+import 'package:printing/printing.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:typed_data';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProcessingScreen extends StatefulWidget {
   final File imageFile;
@@ -24,11 +32,89 @@ class ProcessingScreen extends StatefulWidget {
 class _ProcessingScreenState extends State<ProcessingScreen> {
   late Future<File?> _processingFuture;
   bool _showLoader = true;
+  late File? _processedFile;
 
   @override
   void initState() {
     super.initState();
     _processingFuture = processImage(widget.imageFile);
+    _processingFuture.then((file) {
+      setState(() {
+        _processedFile = file;
+      });
+    });
+  }
+
+  Future<void> _printImage(File processedFile) async {
+    final pdf = pw.Document();
+
+    final image = pw.MemoryImage(
+      File(widget.imageFile.path).readAsBytesSync(),
+    );
+
+    final image2 = pw.MemoryImage(
+      File(processedFile.path).readAsBytesSync(),
+    );
+
+    final ByteData logoByteData = await rootBundle.load('assets/logofinal.png');
+    final Uint8List logoBytes = logoByteData.buffer.asUint8List();
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Container(
+            color: PdfColors.purple,
+            // Fondo morado
+            padding: pw.EdgeInsets.symmetric(vertical: 40),
+            // Espaciado vertical
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                // Logo
+                pw.Image(pw.MemoryImage(logoBytes)),
+                pw.SizedBox(height: 20),
+                // Espaciado entre el logo y el texto
+                // Texto "Esta es su versión, no ha pasado tanto tiempo"
+                pw.Text(
+                  'Esta es su versión, no ha pasado tanto tiempo',
+                  style: pw.TextStyle(color: PdfColors.white),
+                ),
+                pw.SizedBox(height: 30),
+                // Espaciado entre el texto y las imágenes
+                // Imágenes
+                pw.Container(
+                  padding: pw.EdgeInsets.symmetric(horizontal: 10),
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+                    children: [
+                      pw.Image(image),
+                      pw.Image(image2),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
+    final tempDir = await getTemporaryDirectory();
+    final tempPath = tempDir.path;
+    final pdfFile = File('$tempPath/example.pdf');
+    await pdfFile.writeAsBytes(await pdf.save());
+
+    await Printing.layoutPdf(
+      onLayout: (format) => pdf.save(),
+      name: 'fotografía_ia.pdf',
+      dynamicLayout: false,
+      format: PdfPageFormat.a5.copyWith(
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: 0,
+        marginBottom: 0,
+      ),
+    );
   }
 
   @override
@@ -145,30 +231,33 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                         style: TextStyle(color: Colors.red),
                                       );
                                     } else {
+                                      final File processedFile = snapshot.data!;
+
                                       return Center(
                                         child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                height: 480,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 480,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: ImageCompareSlider(
+                                                itemOne: Image.file(
+                                                  widget.imageFile,
                                                 ),
-                                                child: ImageCompareSlider(
-                                                  itemOne: Image.file(
-                                                    widget.imageFile,
-                                                  ),
-                                                  itemTwo: Image.file(
-                                                    snapshot.data!,
-                                                  ),
-                                                  handleRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(50)),
+                                                itemTwo:
+                                                    Image.file(processedFile),
+                                                // Usar el processedFile si está disponible, de lo contrario, mostrar un contenedor vacío
+                                                handleRadius: BorderRadius.all(
+                                                  Radius.circular(50),
                                                 ),
                                               ),
-                                            ]),
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     }
                                   },
@@ -197,16 +286,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            duration: Duration(milliseconds: 300),
-                            child: ResultScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: () => _printImage(_processedFile!),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           Color(0xFF592276),

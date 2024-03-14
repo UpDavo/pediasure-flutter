@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'TakePhotoScreen.dart';
+import 'InstructionsScreen.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:image_compare_slider/image_compare_slider.dart';
 import 'package:funvas/funvas.dart';
