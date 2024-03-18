@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Importa el paquete SystemChrome
+import 'package:flutter/services.dart';
 import 'IntroductionScreen.dart';
-import 'package:camera/camera.dart';
-
-// List<CameraDescription> cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // cameras = await availableCameras();
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

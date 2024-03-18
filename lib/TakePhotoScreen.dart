@@ -335,16 +335,50 @@ class _CameraWidgetState extends State<CameraWidget> {
                     )
                   : CameraPreview(_controller),
               if (_imageFile == null)
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: InkWell(
-                    onTap: _takePicture,
-                    child: Image.asset(
-                      'assets/camara.png',
-                      width: 70,
-                      height: 70,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(
+                              0), // Ajusta este valor si deseas que la esquina inferior derecha no sea redondeada
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: Offset(0,
+                                2), // Cambia la posición de la sombra según sea necesario
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(10),
+                      // Agrega relleno alrededor del texto
+                      child: Text(
+                        'Tap a la cámara para tomar la fotografía',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 9, color: Color(0xFF592276)),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 5, bottom: 20),
+                      child: InkWell(
+                        onTap: _takePicture,
+                        child: Image.asset(
+                          'assets/camara.png',
+                          width: 70,
+                          height: 70,
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               else
                 Padding(
@@ -366,13 +400,6 @@ class _CameraWidgetState extends State<CameraWidget> {
               if (_showCountdown)
                 Center(
                   child: Container(
-                    // color: Colors.black54,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.only(
-                    //     topRight: Radius.circular(20),
-                    //     bottomRight: Radius.circular(20),
-                    //   ),
-                    // ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(

@@ -1,23 +1,24 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+
+// import 'package:page_transition/page_transition.dart';
 import 'package:pediasure_flutter/IntroductionScreen.dart';
-import 'ResultScreen.dart';
+
+// import 'ResultScreen.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:pediasure_flutter/services/api_service.dart';
-import 'package:image_compare_slider/image_compare_slider.dart';
+
+// import 'package:image_compare_slider/image_compare_slider.dart';
 import 'dart:math' as math;
 import 'package:funvas/funvas.dart';
 import 'package:pediasure_flutter/src/fuvas_anim.dart';
 import 'package:printing/printing.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:typed_data';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProcessingScreen extends StatefulWidget {
@@ -33,6 +34,9 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
   late Future<File?> _processingFuture;
   bool _showLoader = true;
   late File? _processedFile;
+
+  Stream<int> timerStream =
+      Stream.periodic(Duration(milliseconds: 100), (i) => i);
 
   @override
   void initState() {
@@ -56,40 +60,58 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
       File(processedFile.path).readAsBytesSync(),
     );
 
+    print(image);
+    print(image2);
+
     final ByteData logoByteData = await rootBundle.load('assets/logofinal.png');
     final Uint8List logoBytes = logoByteData.buffer.asUint8List();
 
     pdf.addPage(
       pw.Page(
+        margin: pw.EdgeInsets.all(0),
+        pageFormat: PdfPageFormat.a5,
         build: (pw.Context context) {
           return pw.Container(
-            color: PdfColors.purple,
-            // Fondo morado
-            padding: pw.EdgeInsets.symmetric(vertical: 40),
-            // Espaciado vertical
+            color: PdfColor.fromHex('#592276'), // Cambiar color de fondo
+            padding: pw.EdgeInsets.all(20),
+            width: double.infinity,
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.center,
               children: [
-                // Logo
-                pw.Image(pw.MemoryImage(logoBytes)),
-                pw.SizedBox(height: 20),
-                // Espaciado entre el logo y el texto
-                // Texto "Esta es su versión, no ha pasado tanto tiempo"
+                pw.SizedBox(height: 40),
+                pw.Image(pw.MemoryImage(logoBytes.buffer.asUint8List()),
+                    width: 270),
+                pw.SizedBox(height: 10),
                 pw.Text(
-                  'Esta es su versión, no ha pasado tanto tiempo',
-                  style: pw.TextStyle(color: PdfColors.white),
+                  '¡Esta es su versión!, no ha pasado tanto tiempo',
+                  style: pw.TextStyle(
+                    color: PdfColors.white,
+                    fontWeight: pw.FontWeight.bold, // Añadir negrita al texto
+                    fontSize: 11, // Ajustar el tamaño del texto
+                  ),
                 ),
-                pw.SizedBox(height: 30),
-                // Espaciado entre el texto y las imágenes
-                // Imágenes
+                pw.SizedBox(height: 20),
                 pw.Container(
-                  padding: pw.EdgeInsets.symmetric(horizontal: 10),
-                  child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
-                    children: [
-                      pw.Image(image),
-                      pw.Image(image2),
-                    ],
+                  width: 170,
+                  height: 170,
+                  decoration: pw.BoxDecoration(
+                    borderRadius: pw.BorderRadius.circular(30),
+                  ),
+                  child: pw.FittedBox(
+                    fit: pw.BoxFit.cover,
+                    child: pw.Image(image),
+                  ),
+                ),
+                pw.SizedBox(height: 4),
+                pw.Container(
+                  width: 170,
+                  height: 170, // Definir un tamaño fijo para las imágenes
+                  decoration: pw.BoxDecoration(
+                    borderRadius: pw.BorderRadius.circular(30),
+                  ),
+                  child: pw.FittedBox(
+                    fit: pw.BoxFit.cover,
+                    child: pw.Image(image2),
                   ),
                 ),
               ],
@@ -109,10 +131,10 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
       name: 'fotografía_ia.pdf',
       dynamicLayout: false,
       format: PdfPageFormat.a5.copyWith(
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: 0,
-        marginBottom: 0,
+        marginLeft: -PdfPageFormat.mm,
+        marginRight: -PdfPageFormat.mm,
+        marginTop: -PdfPageFormat.mm,
+        marginBottom: -PdfPageFormat.mm,
       ),
     );
   }
@@ -222,6 +244,18 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                               'Procesando imagen...',
                                               style: TextStyle(fontSize: 18),
                                             ),
+                                            SizedBox(height: 10),
+                                            StreamBuilder<int>(
+                                              stream: timerStream,
+                                              builder:
+                                                  (context, timerSnapshot) {
+                                                return Text(
+                                                  '${(timerSnapshot.data ?? 0) ~/ 10}.${(timerSnapshot.data ?? 0) % 10}',
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                );
+                                              },
+                                            ),
                                           ],
                                         ),
                                       );
@@ -231,34 +265,67 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                         style: TextStyle(color: Colors.red),
                                       );
                                     } else {
-                                      final File processedFile = snapshot.data!;
+                                      final File? processedFile = snapshot.data;
+                                      if (processedFile != null) {
+                                        return Center(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // Container(
+                                              //   height: 480,
+                                              //   decoration: BoxDecoration(
+                                              //     borderRadius:
+                                              //         BorderRadius.circular(10),
+                                              //   ),
+                                              //   clipBehavior: Clip.hardEdge,
+                                              //   child: ImageCompareSlider(
+                                              //     photoRadius: BorderRadius.all(
+                                              //       Radius.circular(15),
+                                              //     ),
+                                              //     itemOne: Image.file(
+                                              //       widget.imageFile,
+                                              //       fit: BoxFit.cover,
+                                              //       width: double.infinity,
+                                              //       height: double.infinity,
+                                              //     ),
+                                              //     itemTwo: Image.file(
+                                              //       processedFile!,
+                                              //       fit: BoxFit.cover,
+                                              //       width: double.infinity,
+                                              //       height: double.infinity,
+                                              //     ),
+                                              //   ),
+                                              // ),
 
-                                      return Center(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              height: 480,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: ImageCompareSlider(
-                                                itemOne: Image.file(
-                                                  widget.imageFile,
+                                              Container(
+                                                height: 480,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
                                                 ),
-                                                itemTwo:
-                                                    Image.file(processedFile),
-                                                // Usar el processedFile si está disponible, de lo contrario, mostrar un contenedor vacío
-                                                handleRadius: BorderRadius.all(
-                                                  Radius.circular(50),
+                                                clipBehavior: Clip.hardEdge,
+                                                child: Center(
+                                                  child: Image.file(
+                                                    processedFile!,
+                                                    fit: BoxFit.cover,
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        // Handle the case where processedFile is null
+                                        return Center(
+                                          child: Text(
+                                            'Error: Processed file is null',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        );
+                                      }
                                     }
                                   },
                                 ),
