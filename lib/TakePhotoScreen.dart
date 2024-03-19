@@ -230,7 +230,7 @@ class _CameraWidgetState extends State<CameraWidget> {
   late Future<void> _initializeControllerFuture;
   XFile? _imageFile;
   bool _showCountdown = false;
-  int _countdown = 3;
+  int _countdown = 2;
   bool _isCameraInitialized = false;
 
   // Callback function to update photoTaken state
@@ -294,7 +294,7 @@ class _CameraWidgetState extends State<CameraWidget> {
     setState(() {
       _imageFile = image;
       _showCountdown = false;
-      _countdown = 3;
+      _countdown = 2;
       // Marcar que se ha tomado una foto
       updatePhotoTaken(true);
       updatePhoto(image);

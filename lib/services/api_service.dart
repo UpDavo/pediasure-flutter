@@ -77,7 +77,7 @@ Future<Map<String, dynamic>?> sendImageToAPI(File imageFile) async {
 Future<Map<String, dynamic>?> sendImageToAPIReplicate(File imageFile) async {
   const String bearer = 'Token r8_2z0RFjKWdOHlHyeg1XSISgcU9T1ZXJL3UE0tP';
   const String prompt =
-      'HDR photo of young kid img, smiling for the viewer, wearing a doctor uniform, happy, late summer. High dynamic range, vivid, rich details, clear shadows and highlights, realistic, intense, enhanced contrast, highly detailed';
+      'HDR photo of 7 years old young kid img, smiling for the viewer, wearing a doctor uniform, happy, late summer. High dynamic range, vivid, rich details, clear shadows and highlights, realistic, intense, enhanced contrast, highly detailed';
   const String negPrompt =
       'nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry';
   const url = 'https://api.replicate.com/v1/predictions';
@@ -112,9 +112,15 @@ Future<Map<String, dynamic>?> sendImageToAPIReplicate(File imageFile) async {
     if (decodedJson['urls'] != null) {
       var getUrl = decodedJson['urls']['get'];
       print(getUrl);
-      await Future.delayed(Duration(seconds: 60));
-      final responseget = await http.get(Uri.parse(getUrl), headers: headers);
-      var decodedGet = json.decode(responseget.body);
+
+      var decodedGet;
+      do {
+        await Future.delayed(Duration(seconds: 2));
+        final responseget = await http.get(Uri.parse(getUrl), headers: headers);
+        decodedGet = json.decode(responseget.body);
+        print(decodedGet['status']);
+      } while (decodedGet == null || decodedGet['status'] != 'succeeded');
+
       var finaloutput = {'output': decodedGet['output'][0]};
       print(finaloutput);
       return finaloutput;
