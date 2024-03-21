@@ -20,13 +20,13 @@ class TakePhotoScreen extends StatelessWidget {
             clipper: OvalBottomBorderClipper(),
             child: Container(
               width: screenWidth,
-              height: screenHeight / 1.6,
+              height: screenHeight / 1.7,
               decoration: BoxDecoration(
                 color: Color(0xFF592276),
               ),
-              child: FunvasContainer(
-                funvas: Forty(),
-              ),
+              // child: FunvasContainer(
+              //   funvas: Forty(),
+              // ),
             ),
           ),
           Container(
@@ -47,29 +47,30 @@ class TakePhotoScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 190),
+            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 150),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 80, left: 50),
+                    padding: EdgeInsets.only(top: 20, left: 50),
                     child: Image.asset(
                       'assets/logofinal.png',
-                      width: screenWidth * 0.60,
+                      width: screenWidth * 0.30,
                     ),
                   ),
                   Expanded(
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(height: 10),
                           BounceInRight(
                             delay: Duration(milliseconds: 100),
                             onFinish: (direction) => print('$direction'),
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 30.0),
-                              width: 530,
-                              height: 500,
+                              width: 380,
+                              height: 320,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -80,6 +81,7 @@ class TakePhotoScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
+
                               child: Card(
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
@@ -89,20 +91,20 @@ class TakePhotoScreen extends StatelessWidget {
                                   padding: EdgeInsets.only(
                                       left: 45.0,
                                       right: 45,
-                                      top: 80,
-                                      bottom: 80),
+                                      top: 50,
+                                      bottom: 10),
                                   child: Column(
                                     children: [
                                       Text(
                                         'Siga las instrucciones y descubra el cambio',
                                         style: TextStyle(
-                                          fontSize: 30,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF592276),
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      SizedBox(height: 40),
+                                      SizedBox(height: 10),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -137,14 +139,14 @@ class TakePhotoScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 120.0, vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 400.0, vertical: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AnimatedContainer(
                   duration: Duration(milliseconds: 500),
-                  width: 500,
-                  height: 60.0,
+                  width: 320,
+                  height: 40.0,
                   margin: EdgeInsets.only(bottom: 10),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
@@ -168,7 +170,7 @@ class TakePhotoScreen extends StatelessWidget {
                         '¡Listo para tomar la fotografía!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 17,
                           color: Colors.white,
                         ),
                       ),
@@ -177,8 +179,8 @@ class TakePhotoScreen extends StatelessWidget {
                 ),
                 AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  width: 500,
-                  height: 60,
+                  width: 320,
+                  height: 40,
                   margin: EdgeInsets.only(bottom: 25),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
@@ -195,7 +197,7 @@ class TakePhotoScreen extends StatelessWidget {
                         'Regresar',
                         textAlign: TextAlign.center,
                         style:
-                            TextStyle(fontSize: 22, color: Color(0xFF592276)),
+                            TextStyle(fontSize: 17, color: Color(0xFF592276)),
                       ),
                     ),
                   ),
@@ -221,14 +223,14 @@ class StepItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             stepNumber,
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Color(0xFF592276),
             ),
@@ -238,7 +240,7 @@ class StepItem extends StatelessWidget {
             child: Text(
               stepDescription,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 14,
                 color: Color(0xFF592276),
               ),
             ),

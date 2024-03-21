@@ -25,13 +25,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             clipper: OvalBottomBorderClipper(),
             child: Container(
               width: screenWidth,
-              height: screenHeight / 1.6,
+              height: screenHeight / 1.7,
               decoration: const BoxDecoration(
                 color: Color(0xFF592276),
               ),
-              child: FunvasContainer(
-                funvas: Forty(),
-              ),
+              // child: FunvasContainer(
+              //   paused: true,
+              //   funvas: Forty(),
+              // ),
             ),
           ),
           Container(
@@ -60,10 +61,10 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 70, left: 50),
+                    padding: const EdgeInsets.only(top: 20, left: 50),
                     child: Image.asset(
                       'assets/logofinal.png',
-                      width: screenWidth * 0.60,
+                      width: screenWidth * 0.3,
                     ),
                   ),
                   Expanded(
@@ -75,7 +76,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                           child: Text(
                             'Bienvenido a la fuente de crecimiento',
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -83,10 +84,10 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.only(top: 35.0, bottom: 20.0),
+                              const EdgeInsets.only(top: 25.0, bottom: 20.0),
                           child: Image.asset(
                             'assets/items.png',
-                            width: screenWidth * 0.60,
+                            width: screenWidth * 0.20,
                           ),
                         ),
                         Expanded(
@@ -95,8 +96,8 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                             children: [
                               AnimatedContainer(
                                 duration: const Duration(milliseconds: 500),
-                                width: 400,
-                                height: 60,
+                                width: 320,
+                                height: 40,
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.push(
@@ -118,7 +119,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                                     '¡Es hora de empezar!',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 22,
+                                      fontSize: 17,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -127,10 +128,10 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
                         const Padding(
                           padding: EdgeInsets.only(
-                              bottom: 70.0, left: 20, right: 20),
+                              bottom: 50.0, left: 120, right: 120),
                           child: Text(
                             'La información o fotografías que se utilizarán en esta generación no serán utilizados para otros fines que el de este evento. La fotografía no se guarda en ninguna base de datos o disco físico. Cada foto es descartada después del proceso.',
                             textAlign: TextAlign.center,

@@ -43,13 +43,13 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
             clipper: OvalBottomBorderClipper(),
             child: Container(
               width: screenWidth,
-              height: screenHeight / 1.6,
+              height: screenHeight / 1.7,
               decoration: BoxDecoration(
                 color: Color(0xFF592276),
               ),
-              child: FunvasContainer(
-                funvas: Forty(),
-              ),
+              // child: FunvasContainer(
+              //   funvas: Forty(),
+              // ),
             ),
           ),
           Container(
@@ -70,29 +70,30 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 190),
+            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 150),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 80, left: 50),
+                    padding: EdgeInsets.only(top: 20, left: 50),
                     child: Image.asset(
                       'assets/logofinal.png',
-                      width: screenWidth * 0.60,
+                      width: screenWidth * 0.30,
                     ),
                   ),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 10),
                         BounceInRight(
                           delay: Duration(milliseconds: 100),
                           onFinish: (direction) => print('$direction'),
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: 30.0),
-                            width: 370,
-                            height: 550,
+                            width: 500,
+                            height: 350,
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -109,7 +110,7 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                padding: EdgeInsets.only(top: 20, bottom: 20),
                                 child: Column(
                                   children: [
                                     ///
@@ -132,14 +133,14 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 120.0, vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 400.0, vertical: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AnimatedContainer(
                   duration: Duration(milliseconds: 500),
-                  width: 500,
-                  height: 60.0,
+                  width: 320,
+                  height: 40.0,
                   margin: EdgeInsets.only(bottom: 10),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
@@ -173,7 +174,7 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
                         'Continuar',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 17,
                           color: Colors.white,
                         ),
                       ),
@@ -182,8 +183,8 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
                 ),
                 AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  width: 500,
-                  height: 60,
+                  width: 320,
+                  height: 40,
                   margin: EdgeInsets.only(bottom: 25),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
@@ -200,7 +201,7 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
                         'Regresar',
                         textAlign: TextAlign.center,
                         style:
-                            TextStyle(fontSize: 22, color: Color(0xFF592276)),
+                            TextStyle(fontSize: 17, color: Color(0xFF592276)),
                       ),
                     ),
                   ),
@@ -325,95 +326,100 @@ class _CameraWidgetState extends State<CameraWidget> {
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              _imageFile != null
-                  ? Image.file(
-                      File(_imageFile!.path),
-                      fit: BoxFit.cover,
-                    )
-                  : CameraPreview(_controller),
-              if (_imageFile == null)
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(
-                              0), // Ajusta este valor si deseas que la esquina inferior derecha no sea redondeada
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: Offset(0,
-                                2), // Cambia la posición de la sombra según sea necesario
+          return Container(
+            width: 500,
+            height: 405,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                _imageFile != null
+                    ? Image.file(
+                        File(_imageFile!.path),
+                        fit: BoxFit.cover,
+                      )
+                    : CameraPreview(_controller),
+                if (_imageFile == null)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.only(
+                      //       topLeft: Radius.circular(20),
+                      //       topRight: Radius.circular(20),
+                      //       bottomLeft: Radius.circular(20),
+                      //       bottomRight: Radius.circular(
+                      //           0), // Ajusta este valor si deseas que la esquina inferior derecha no sea redondeada
+                      //     ),
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //         color: Colors.grey.withOpacity(0.5),
+                      //         spreadRadius: 1,
+                      //         blurRadius: 4,
+                      //         offset: Offset(0,
+                      //             2), // Cambia la posición de la sombra según sea necesario
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   padding: EdgeInsets.all(10),
+                      //   // Agrega relleno alrededor del texto
+                      //   child: Text(
+                      //     'Tap a la cámara para tomar la fotografía',
+                      //     textAlign: TextAlign.center,
+                      //     style: TextStyle(fontSize: 6, color: Color(0xFF592276)),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 5, bottom: 20),
+                        child: InkWell(
+                          onTap: _takePicture,
+                          child: Image.asset(
+                            'assets/camara.png',
+                            width: 40,
+                            height: 40,
                           ),
-                        ],
+                        ),
                       ),
-                      padding: EdgeInsets.all(10),
-                      // Agrega relleno alrededor del texto
+                    ],
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ElevatedButton(
+                      onPressed: _retakePicture,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white,
+                        ),
+                      ),
                       child: Text(
-                        'Tap a la cámara para tomar la fotografía',
+                        'Retomar foto',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 9, color: Color(0xFF592276)),
+                        style:
+                            TextStyle(fontSize: 10, color: Color(0xFF592276)),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, top: 5, bottom: 20),
-                      child: InkWell(
-                        onTap: _takePicture,
-                        child: Image.asset(
-                          'assets/camara.png',
-                          width: 70,
-                          height: 70,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              else
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: ElevatedButton(
-                    onPressed: _retakePicture,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white,
-                      ),
-                    ),
-                    child: Text(
-                      'Retomar foto',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, color: Color(0xFF592276)),
                     ),
                   ),
-                ),
-              if (_showCountdown)
-                Center(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        _countdown > 0 ? '$_countdown' : '¡Sonríe!',
-                        style: TextStyle(
-                          fontSize: 60,
-                          color: Color(0xFF592276),
-                          fontWeight: FontWeight.bold,
+                if (_showCountdown)
+                  Center(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          _countdown > 0 ? '$_countdown' : '¡Sonríe!',
+                          style: TextStyle(
+                            fontSize: 50,
+                            color: Color(0xFF592276),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           );
         } else {
           return Center(child: CircularProgressIndicator());

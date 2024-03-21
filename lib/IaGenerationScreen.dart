@@ -151,13 +151,13 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
             clipper: OvalBottomBorderClipper(),
             child: Container(
               width: screenWidth,
-              height: screenHeight / 1.6,
+              height: screenHeight / 1.7,
               decoration: BoxDecoration(
                 color: Color(0xFF592276),
               ),
-              child: FunvasContainer(
-                funvas: Forty(),
-              ),
+              // child: FunvasContainer(
+              //   funvas: Forty(),
+              // ),
             ),
           ),
           Container(
@@ -178,28 +178,29 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 190),
+            padding: EdgeInsets.fromLTRB(35.0, 40.0, 35.0, 150),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 80, left: 50),
+                    padding: EdgeInsets.only(top: 20, left: 50),
                     child: Image.asset(
                       'assets/logofinal.png',
-                      width: screenWidth * 0.60,
+                      width: screenWidth * 0.30,
                     ),
                   ),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 10),
                         const Padding(
-                          padding: EdgeInsets.only(bottom: 25.0),
+                          padding: EdgeInsets.only(bottom: 13.0),
                           child: Text(
                             'Esta es su versión, no ha pasado tanto tiempo',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -210,8 +211,8 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                           onFinish: (direction) => print('$direction'),
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: 30.0),
-                            width: 340,
-                            height: 500,
+                            width: 500,
+                            height: 320,
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -228,7 +229,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(5.0),
+                                padding: EdgeInsets.only(top: 0, bottom: 0),
                                 child: FutureBuilder<File?>(
                                   future: _processingFuture,
                                   builder: (context, snapshot) {
@@ -299,13 +300,15 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                               // ),
 
                                               Container(
-                                                height: 480,
+                                                height: 312,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                 ),
                                                 clipBehavior: Clip.hardEdge,
-                                                child: Center(
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
                                                   child: Image.file(
                                                     processedFile!,
                                                     fit: BoxFit.cover,
@@ -341,14 +344,14 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 120.0, vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 400.0, vertical: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AnimatedContainer(
                   duration: Duration(milliseconds: 500),
-                  width: 500,
-                  height: 60.0,
+                  width: 320,
+                  height: 40,
                   margin: EdgeInsets.only(bottom: 10),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
@@ -363,7 +366,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                         '¡Vamos a imprimirla!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 17,
                           color: Colors.white,
                         ),
                       ),
@@ -372,8 +375,8 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                 ),
                 AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  width: 500,
-                  height: 60,
+                  width: 320,
+                  height: 40,
                   margin: EdgeInsets.only(bottom: 25),
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 0),
@@ -395,7 +398,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                         'Volver al Inicio',
                         textAlign: TextAlign.center,
                         style:
-                            TextStyle(fontSize: 22, color: Color(0xFF592276)),
+                            TextStyle(fontSize: 17, color: Color(0xFF592276)),
                       ),
                     ),
                   ),

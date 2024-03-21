@@ -75,6 +75,8 @@ Future<Map<String, dynamic>?> sendImageToAPI(File imageFile) async {
 
 // Función para enviar la imagen a la API y obtener la respuesta
 Future<Map<String, dynamic>?> sendImageToAPIReplicate(File imageFile) async {
+  print("image");
+  print(imageFile);
   const String bearer = 'Token r8_2z0RFjKWdOHlHyeg1XSISgcU9T1ZXJL3UE0tP';
   const String prompt =
       'HDR photo of 7 years old young kid img, smiling for the viewer, wearing a doctor uniform, happy, late summer. High dynamic range, vivid, rich details, clear shadows and highlights, realistic, intense, enhanced contrast, highly detailed';
