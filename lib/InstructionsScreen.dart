@@ -139,7 +139,7 @@ class TakePhotoScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 400.0, vertical: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 470.0, vertical: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

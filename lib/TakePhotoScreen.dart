@@ -133,7 +133,7 @@ class _ReviewPhotoScreenState extends State<ReviewPhotoScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 400.0, vertical: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 470.0, vertical: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
